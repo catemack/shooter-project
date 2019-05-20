@@ -9,8 +9,10 @@ set(SOURCE_FILES_CORE
 	"src/common.hpp"
 	"src/world.cpp"
 	"src/world.hpp"
-	"src/effect.cpp"
-	"src/effect.hpp"
+	"src/shader.cpp"
+	"src/shader.hpp"
+	"src/texture.cpp"
+	"src/texture.hpp"
 )
 set(SOURCE_FILES_SHADERS "shaders/color.fs.glsl" "shaders/color.vs.glsl")
 set(SOURCE_FILES_GLAD "ext/glad/src/glad.c")
@@ -40,8 +42,18 @@ target_compile_definitions(${PROJECT_NAME} PUBLIC "GLFW_INCLUDE_NONE")
 # GLAD
 include_directories(SYSTEM "ext/glad/include")
 
+# stb
+target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/ext/stb/include")
+#target_compile_definitions(${PROJECT_NAME} PUBLIC "STB_IMAGE_IMPLEMENTATION")
+
 # Copy shaders to output directory
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy_directory
 	"${CMAKE_CURRENT_SOURCE_DIR}/shaders"
 	"$<TARGET_FILE_DIR:${PROJECT_NAME}>/shaders")
+
+# Copy data files to output directory
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy_directory
+	"${CMAKE_CURRENT_SOURCE_DIR}/data"
+	"$<TARGET_FILE_DIR:${PROJECT_NAME}>/data")

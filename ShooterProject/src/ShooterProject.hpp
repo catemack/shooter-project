@@ -14,6 +14,7 @@
 // internal
 #include "common.hpp"
 #include "world.hpp"
-#include "effect.hpp"
+#include "shader.hpp"
+#include "texture.hpp"
 
 void frameBufferSizeCallback(GLFWwindow* window, int width, int height);

@@ -1,13 +1,13 @@
-#include <effect.hpp>
+#include <shader.hpp>
 
-Effect::Effect() :
+Shader::Shader() :
 	vertex(NULL),
 	fragment(NULL),
 	program(NULL)
 {
 }
 
-Effect::~Effect()
+Shader::~Shader()
 {
 	if (program != NULL)
 	{
@@ -26,7 +26,7 @@ Effect::~Effect()
 	}
 }
 
-bool Effect::init(const char* vsPath, const char* fsPath)
+bool Shader::init(const char* vsPath, const char* fsPath)
 {
 	// open shader files
 	std::ifstream vsInStream(vsPath);
@@ -98,4 +98,9 @@ bool Effect::init(const char* vsPath, const char* fsPath)
 	}
 
 	return true;
+}
+
+void Shader::use()
+{
+	glUseProgram(program);
 }

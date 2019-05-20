@@ -10,13 +10,14 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-class Effect
+class Shader
 {
 public:
-	Effect();
-	~Effect();
+	Shader();
+	~Shader();
 
 	bool init(const char* vsPath, const char* fsPath);
+	void use();
 
 	GLuint program;
 

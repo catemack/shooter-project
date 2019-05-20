@@ -6,7 +6,7 @@
 #include <GLFW/glfw3.h>
 
 // internal
-#include <effect.hpp>
+#include <shader.hpp>
 
 class World
 {
@@ -15,7 +15,7 @@ public:
 	~World();
 
 	void bindInputHandlers(GLFWwindow* window);
-	void render(GLFWwindow* window, const Effect* effect);
+	void render(GLFWwindow* window, const Shader* shader);
 
 private:
 	void handleKey(GLFWwindow* window, int key, int scancode, int action, int mods);

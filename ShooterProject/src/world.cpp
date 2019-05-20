@@ -14,7 +14,7 @@ void World::bindInputHandlers(GLFWwindow* window)
 	glfwSetKeyCallback(window, key_redirect);
 }
 
-void World::render(GLFWwindow* window, const Effect* effect)
+void World::render(GLFWwindow* window, const Shader* shader)
 {
 	
 }
