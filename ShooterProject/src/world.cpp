@@ -1,11 +1,22 @@
 #include "world.hpp"
 
-World::World()
-{
-}
-
 World::~World()
 {
+	for (auto entity : renderables)
+		delete entity;
+}
+
+bool World::init()
+{
+	renderables.push_back(new ColorEntity);
+	if (!((ColorEntity*)renderables.back())->init())
+		return false;
+
+	renderables.push_back(new TextureEntity);
+	if (!((TextureEntity*)renderables.back())->init("./data/textures/awesomeface.png"))
+		return false;
+
+	return true;
 }
 
 void World::bindInputHandlers(GLFWwindow* window)
@@ -14,9 +25,10 @@ void World::bindInputHandlers(GLFWwindow* window)
 	glfwSetKeyCallback(window, key_redirect);
 }
 
-void World::render(GLFWwindow* window, const Shader* shader)
+void World::render()
 {
-	
+	for (auto renderable : renderables)
+		renderable->draw();
 }
 
 void World::handleKey(GLFWwindow* window, int key, int scancode, int action, int mods)

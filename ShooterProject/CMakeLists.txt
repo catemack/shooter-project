@@ -7,17 +7,23 @@ cmake_minimum_required (VERSION 3.8)
 set(SOURCE_FILES_MAIN "src/ShooterProject.cpp" "src/ShooterProject.hpp")
 set(SOURCE_FILES_CORE
 	"src/common.hpp"
+	"src/common.cpp"
 	"src/world.cpp"
 	"src/world.hpp"
-	"src/shader.cpp"
-	"src/shader.hpp"
-	"src/texture.cpp"
-	"src/texture.hpp"
+	"src/utils/shader.cpp"
+	"src/utils/shader.hpp"
+	"src/utils/texture.cpp"
+	"src/utils/texture.hpp"
+	"src/entities/renderable.cpp"
+	"src/entities/renderable.hpp"
+	"src/entities/color_entity.cpp"
+	"src/entities/color_entity.hpp"
+	"src/entities/texture_entity.cpp"
+	"src/entities/texture_entity.hpp"
 )
-set(SOURCE_FILES_SHADERS "shaders/color.fs.glsl" "shaders/color.vs.glsl")
 set(SOURCE_FILES_GLAD "ext/glad/src/glad.c")
 
-add_executable (${PROJECT_NAME} ${SOURCE_FILES_MAIN} ${SOURCE_FILES_CORE} ${SOURCE_FILES_SHADERS} ${SOURCE_FILES_GLAD})
+add_executable (${PROJECT_NAME} ${SOURCE_FILES_MAIN} ${SOURCE_FILES_CORE} ${SOURCE_FILES_GLAD})
 target_include_directories(${PROJECT_NAME} PUBLIC src/)
 
 # OpenGL

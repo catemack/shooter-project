@@ -1,15 +1,47 @@
 #pragma once
 
 // stdlib
-#include <string>
+#include <iostream>
 
-const char* WindowTitle = "My Game";
-const int WindowWidth = 1280;
-const int WindowHeight = 720;
+// GLFW
+#define GLFW_DLL
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
+extern char* WindowTitle;
+extern int WindowWidth;
+extern int WindowHeight;
+
+struct Vec2
+{
+	float x, y;
+};
+
+struct Vec3
+{
+	float x, y, z;
+};
+
+struct Vec4
+{
+	float x, y, z, w;
+};
 
 struct Mesh
 {
 	GLuint vao;
 	GLuint vbo;
 	GLuint ebo;
+};
+
+struct ColorVertex
+{
+	Vec3 pos;
+	Vec4 color;
+};
+
+struct TextureVertex
+{
+	Vec3 pos;
+	Vec2 texPos;
 };

@@ -6,15 +6,8 @@
 // stdlib
 #include <iostream>
 
-// GLFW
-#define GLFW_DLL
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
 // internal
 #include "common.hpp"
 #include "world.hpp"
-#include "shader.hpp"
-#include "texture.hpp"
 
 void frameBufferSizeCallback(GLFWwindow* window, int width, int height);

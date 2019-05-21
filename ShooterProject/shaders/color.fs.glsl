@@ -1,7 +1,7 @@
 #version 330
 
 // From vertex shader
-in vec3 vcolor;
+in vec4 vcolor;
 //in vec3 vpos;
 
 // Application data
@@ -13,5 +13,5 @@ out vec4 color;
 
 void main()
 {
-	color = vec4(vcolor, 1.0);
+	color = vcolor;
 }

@@ -1,11 +1,13 @@
-#include <texture.hpp>
+#include <utils/texture.hpp>
 
 // stb
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
 Texture::Texture() :
-	id(0)
+	id(0),
+	height(0),
+	width(0)
 {
 }
 
