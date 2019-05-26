@@ -50,7 +50,9 @@ include_directories(SYSTEM "ext/glad/include")
 
 # stb
 target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/ext/stb/include")
-#target_compile_definitions(${PROJECT_NAME} PUBLIC "STB_IMAGE_IMPLEMENTATION")
+
+# glm
+include_directories(SYSTEM "ext/glm/include")
 
 # Copy shaders to output directory
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
