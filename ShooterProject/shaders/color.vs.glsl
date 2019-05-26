@@ -9,14 +9,11 @@ out vec4 vcolor;
 //out vec3 vpos;
 
 // Application data
-//uniform mat3 transform;
+uniform mat4 transform;
 //uniform mat3 projection;
 
 void main()
 {
-	//vpos = in_position;
 	vcolor = in_color;
-	//vec3 pos = projection * transform * in_position;
-	//gl_Position = vec4(pos, 1.0);
-	gl_Position = vec4(in_position, 1.0f);
+	gl_Position = transform * vec4(in_position, 1.0f);
 }

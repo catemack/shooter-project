@@ -7,14 +7,14 @@ TextureEntity::TextureEntity()
 {
 	// TODO: generate this from arguments
 	TextureVertex vertices[4];
-	vertices[0].pos = { 0.5f, 0.5f, 0.0f };
-	vertices[0].texPos = { 1.0f, 1.0f };
-	vertices[1].pos = { 0.5f, -0.5f, 0.0f };
-	vertices[1].texPos = { 1.0f, 0.0f };
-	vertices[2].pos = { 0.0f, -0.5f, 0.0f };
-	vertices[2].texPos = { 0.0f, 0.0f };
-	vertices[3].pos = { 0.0f, 0.5f, 0.0f };
-	vertices[3].texPos = { 0.0f, 1.0f };
+	vertices[0].pos = glm::vec3(0.5f, 0.5f, 0.0f);
+	vertices[0].texPos = glm::vec2(1.0f, 1.0f);
+	vertices[1].pos = glm::vec3(0.5f, -0.5f, 0.0f);
+	vertices[1].texPos = glm::vec2(1.0f, 0.0f);
+	vertices[2].pos = glm::vec3(0.0f, -0.5f, 0.0f);
+	vertices[2].texPos = glm::vec2(0.0f, 0.0f);
+	vertices[3].pos = glm::vec3(0.0f, 0.5f, 0.0f);
+	vertices[3].texPos = glm::vec2(0.0f, 1.0f);
 
 	unsigned int indices[] = {
 		0, 3, 1,  // first Triangle
@@ -36,6 +36,12 @@ TextureEntity::TextureEntity()
 	/* Bind and set element buffer */
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.ebo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+	/* Input data from vertex buffer */
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(TextureVertex), (void*)0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(TextureVertex), (void*)sizeof(glm::vec3));
 }
 
 TextureEntity::~TextureEntity()
@@ -58,6 +64,9 @@ bool TextureEntity::init(const char* path)
 
 void TextureEntity::draw()
 {
+	/* Set transform matrix */
+	glm::mat4 transform = glm::mat4(1.0f);
+
 	/* Set shaders */
 	shader.use();
 
@@ -66,11 +75,8 @@ void TextureEntity::draw()
 	glBindBuffer(GL_ARRAY_BUFFER, mesh.vbo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.ebo);
 
-	/* Input data from vertex buffer */
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(TextureVertex), (void*)0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(TextureVertex), (void*)sizeof(Vec3));
+	GLuint transformLoc = glGetUniformLocation(shader.program, "transform");
+	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
 
 	/* Draw triangles */
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

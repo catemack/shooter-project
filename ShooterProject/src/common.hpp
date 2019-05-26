@@ -8,24 +8,13 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+// glm
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 extern char* WindowTitle;
 extern int WindowWidth;
 extern int WindowHeight;
-
-struct Vec2
-{
-	float x, y;
-};
-
-struct Vec3
-{
-	float x, y, z;
-};
-
-struct Vec4
-{
-	float x, y, z, w;
-};
 
 struct Mesh
 {
@@ -36,12 +25,12 @@ struct Mesh
 
 struct ColorVertex
 {
-	Vec3 pos;
-	Vec4 color;
+	glm::vec3 pos;
+	glm::vec4 color;
 };
 
 struct TextureVertex
 {
-	Vec3 pos;
-	Vec2 texPos;
+	glm::vec3 pos;
+	glm::vec2 texPos;
 };
