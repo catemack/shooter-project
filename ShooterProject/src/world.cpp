@@ -90,14 +90,20 @@ bool World::init()
 void World::update(float deltaTime)
 {
 	float cameraSpeed = 2.5f * deltaTime;
+
+	// Create a normalized projection of camera.front on the XZ axis
+	// This keeps the player bound to only moving horizontally with WASD
+	glm::vec3 front = glm::vec3(camera.front.x, 0.0f, camera.front.z);
+	front = glm::normalize(front);
+
 	if (pressedForward)
-		camera.pos += cameraSpeed * camera.front;
+		camera.pos += cameraSpeed * front;
 	if (pressedBackward)
-		camera.pos -= cameraSpeed * camera.front;
+		camera.pos -= cameraSpeed * front;
 	if (pressedLeft)
-		camera.pos -= cameraSpeed * glm::normalize(glm::cross(camera.front, camera.up));
+		camera.pos -= cameraSpeed * glm::normalize(glm::cross(front, camera.up));
 	if (pressedRight)
-		camera.pos += cameraSpeed * glm::normalize(glm::cross(camera.front, camera.up));
+		camera.pos += cameraSpeed * glm::normalize(glm::cross(front, camera.up));
 }
 
 void World::bindInputHandlers(GLFWwindow* window)
