@@ -6,7 +6,8 @@ World::World() :
 	pressedLeft(false),
 	pressedRight(false),
 	lastX(WindowWidth / 2),
-	lastY(WindowHeight / 2)
+	lastY(WindowHeight / 2),
+	firstMouseUpdate(true)
 {
 }
 
@@ -142,5 +143,34 @@ void World::handleKey(GLFWwindow * window, int key, int scancode, int action, in
 
 void World::handleMouseMove(GLFWwindow* window, double xpos, double ypos)
 {
+	if (firstMouseUpdate)
+	{
+		firstMouseUpdate = false;
+		lastX = xpos;
+		lastY = ypos;
+	}
 
+	float deltaX = xpos - lastX;
+	float deltaY = lastY - ypos;
+	lastX = xpos;
+	lastY = ypos;
+
+	float sensitivity = 0.05f;
+	deltaX *= sensitivity;
+	deltaY *= sensitivity;
+
+	camera.yaw += deltaX;
+	camera.pitch += deltaY;
+
+	// Bind pitch range so we can't do flips (yet)
+	if (camera.pitch > 89.0f)
+		camera.pitch = 89.0f;
+	if (camera.pitch < -89.0f)
+		camera.pitch = -89.0f;
+
+	glm::vec3 front;
+	front.x = cos(glm::radians(camera.yaw)) * cos(glm::radians(camera.pitch));
+	front.y = sin(glm::radians(camera.pitch));
+	front.z = sin(glm::radians(camera.yaw)) * cos(glm::radians(camera.pitch));
+	camera.front = glm::normalize(front);
 }

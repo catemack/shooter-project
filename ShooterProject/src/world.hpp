@@ -41,4 +41,5 @@ private:
 	// mouse position
 	float lastX;
 	float lastY;
+	bool firstMouseUpdate; // ensures mouse doesn't jump when window initializes
 };
