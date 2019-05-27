@@ -14,6 +14,8 @@ set(SOURCE_FILES_CORE
 	"src/utils/shader.hpp"
 	"src/utils/texture.cpp"
 	"src/utils/texture.hpp"
+	"src/utils/camera.cpp"
+	"src/utils/camera.hpp"
 	"src/entities/renderable.cpp"
 	"src/entities/renderable.hpp"
 	"src/entities/color_entity.cpp"

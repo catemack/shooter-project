@@ -62,7 +62,7 @@ bool TextureEntity::init(const char* path)
 	return texture.init(path);
 }
 
-void TextureEntity::draw()
+void TextureEntity::draw(const Camera& camera)
 {
 	/* Set transform matrix */
 	glm::mat4 transform = glm::mat4(1.0f);

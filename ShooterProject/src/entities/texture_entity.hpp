@@ -11,7 +11,7 @@ public:
 	virtual ~TextureEntity();
 
 	bool init(const char* path);
-	virtual void draw();
+	virtual void draw(const Camera& camera);
 
 private:
 	static const std::string VSShaderPath;

@@ -3,6 +3,9 @@
 
 #include "ShooterProject.hpp"
 
+float lastTime;
+float deltaTime;
+
 int main()
 {
 	GLFWwindow* window;
@@ -45,9 +48,17 @@ int main()
 		return -1;
 	}
 
+	/* Configure global OpenGL state */
+	glEnable(GL_DEPTH_TEST);
+
 	/* Initialize the world */
 	World world;
-	world.init();
+	if (!world.init())
+	{
+		glfwTerminate();
+		fprintf(stderr, "World failed to initialize");
+		return -1;
+	}
 
 	/* Bind inputs */
 	world.bindInputHandlers(window);
@@ -55,17 +66,26 @@ int main()
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
-		/* Render here */
-		glClearColor(0.26f, 0.50f, 0.96f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		/* Poll for and process events */
+		glfwPollEvents();
 
+		/* Update delta time */
+		float currentTime = glfwGetTime();
+		deltaTime = currentTime - lastTime;
+		lastTime = currentTime;
+
+		/* Update the world */
+		world.update(deltaTime);
+
+		/* Clear screen */
+		glClearColor(0.26f, 0.50f, 0.96f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		/* Render the world */
 		world.render();
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
-
-		/* Poll for and process events */
-		glfwPollEvents();
 	}
 
 	glfwTerminate();
