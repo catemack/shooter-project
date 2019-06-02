@@ -79,6 +79,8 @@ void ColorEntity::draw(const Camera& camera, const glm::vec3 lightColor, const f
 	shader.setVec3("ambient_light_color", lightColor);
 	shader.setFloat("ambient_light_strength", lightIntensity);
 
+	shader.setVec3("view_pos", camera.pos);
+
 	/* Draw triangles */
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 }

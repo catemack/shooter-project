@@ -11,6 +11,7 @@ uniform vec3 light_color;
 uniform vec3 ambient_light_color;
 uniform float ambient_light_strength;
 uniform mat3 normal_mat;
+uniform vec3 view_pos;
 
 // Output
 out vec4 color;
@@ -26,5 +27,12 @@ void main()
 	float diff = max(dot(norm, light_dir), 0.0);
 	vec3 diffuse = diff * light_color;
 
-	color = vcolor * vec4(ambient + diffuse, 1.0);
+	// specular lighting
+	float specular_strength = 0.5;
+	vec3 view_dir = normalize(view_pos - frag_pos);
+	vec3 reflect_dir = reflect(-light_dir, norm);
+	float spec = pow(max(dot(view_dir, reflect_dir), 0.0), 64);
+	vec3 specular = specular_strength * spec * light_color;
+
+	color = vcolor * vec4(ambient + diffuse + specular, 1.0);
 }
