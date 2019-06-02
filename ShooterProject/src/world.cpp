@@ -20,65 +20,96 @@ World::~World()
 bool World::init()
 {
 	ColorVertex vertices[] = {
-		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f) },
-		{ glm::vec3(0.5f, -0.5f, -0.5f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f) },
-		{ glm::vec3(0.5f, 0.5f, -0.5f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f) },
-		{ glm::vec3(0.5f, 0.5f, -0.5f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f) },
-		{ glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f) },
-		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, -0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, 0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, 0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
 
-		{ glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f) },
-		{ glm::vec3(0.5f, -0.5f, 0.5f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f) },
-		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f) },
-		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f) },
-		{ glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f) },
-		{ glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, -0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
 
-		{ glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f) },
-		{ glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f) },
-		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f) },
-		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f) },
-		{ glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f) },
-		{ glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
 
-		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f) },
-		{ glm::vec3(0.5f, 0.5f, -0.5f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f) },
-		{ glm::vec3(0.5f, -0.5f, -0.5f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f) },
-		{ glm::vec3(0.5f, -0.5f, -0.5f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f) },
-		{ glm::vec3(0.5f, -0.5f, 0.5f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f) },
-		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, 0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, -0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, -0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, -0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
 
-		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f) },
-		{ glm::vec3(0.5f, -0.5f, -0.5f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f) },
-		{ glm::vec3(0.5f, -0.5f, 0.5f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f) },
-		{ glm::vec3(0.5f, -0.5f, 0.5f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f) },
-		{ glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f) },
-		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f) },
+		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, -0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, -0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, -0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
 
-		{ glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f) },
-		{ glm::vec3(0.5f, 0.5f, -0.5f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f) },
-		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f) },
-		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f) },
-		{ glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f) },
-		{ glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f) }
+		{ glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, 0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) }
 	};
-	GLuint triangles[]{
-		7, 6, 5,
-		5, 4, 7,
-		3, 2, 1,
-		1, 0, 3,
-		0, 4, 7,
-		7, 3, 0,
-		1, 5, 6,
-		6, 2, 1,
-		7, 6, 2,
-		2, 3, 7,
-		4, 5, 1,
-		1, 0, 4
+
+	renderables.push_back(new ColorEntity(glm::vec3(0.0f, 0.0f, 0.0f), vertices, 36, "color", "lit_color"));
+
+	glm::vec3 lightVerts[] = {
+		glm::vec3(-0.5f, -0.5f, -0.5f),
+		glm::vec3(0.5f, -0.5f, -0.5f),
+		glm::vec3(0.5f, 0.5f, -0.5f),
+		glm::vec3(0.5f, 0.5f, -0.5f),
+		glm::vec3(-0.5f, 0.5f, -0.5f),
+		glm::vec3(-0.5f, -0.5f, -0.5f),
+
+		glm::vec3(-0.5f, -0.5f, 0.5f),
+		glm::vec3(0.5f, -0.5f, 0.5f),
+		glm::vec3(0.5f, 0.5f, 0.5f),
+		glm::vec3(0.5f, 0.5f, 0.5f),
+		glm::vec3(-0.5f, 0.5f, 0.5f),
+		glm::vec3(-0.5f, -0.5f, 0.5f),
+
+		glm::vec3(-0.5f, 0.5f, 0.5f),
+		glm::vec3(-0.5f, 0.5f, -0.5f),
+		glm::vec3(-0.5f, -0.5f, -0.5f),
+		glm::vec3(-0.5f, -0.5f, -0.5f),
+		glm::vec3(-0.5f, -0.5f, 0.5f),
+		glm::vec3(-0.5f, 0.5f, 0.5f),
+
+		glm::vec3(0.5f, 0.5f, 0.5f),
+		glm::vec3(0.5f, 0.5f, -0.5f),
+		glm::vec3(0.5f, -0.5f, -0.5f),
+		glm::vec3(0.5f, -0.5f, -0.5f),
+		glm::vec3(0.5f, -0.5f, 0.5f),
+		glm::vec3(0.5f, 0.5f, 0.5f),
+
+		glm::vec3(-0.5f, -0.5f, -0.5f),
+		glm::vec3(0.5f, -0.5f, -0.5f),
+		glm::vec3(0.5f, -0.5f, 0.5f),
+		glm::vec3(0.5f, -0.5f, 0.5f),
+		glm::vec3(-0.5f, -0.5f, 0.5f),
+		glm::vec3(-0.5f, -0.5f, -0.5f),
+
+		glm::vec3(-0.5f, 0.5f, -0.5f),
+		glm::vec3(0.5f, 0.5f, -0.5f),
+		glm::vec3(0.5f, 0.5f, 0.5f),
+		glm::vec3(0.5f, 0.5f, 0.5f),
+		glm::vec3(-0.5f, 0.5f, 0.5f),
+		glm::vec3(-0.5f, 0.5f, -0.5f)
 	};
-	renderables.push_back(new ColorEntity(glm::vec3(0.0f, 0.0f, 0.0f), vertices, triangles, 36));
-	if (!((ColorEntity*)renderables.back())->init())
-		return false;
+
+	renderables.push_back(new ColorEntity(glm::vec3(0.0f, 50.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0), lightVerts, 36, "color", "color"));
 
 	/*renderables.push_back(new TextureEntity);
 	if (!((TextureEntity*)renderables.back())->init("./data/textures/awesomeface.png"))
@@ -123,8 +154,9 @@ void World::bindInputHandlers(GLFWwindow* window)
 
 void World::render()
 {
-	for (auto renderable : renderables)
-		renderable->draw(camera);
+	for (auto renderable : renderables) {
+		renderable->draw(camera, glm::vec3(1.0f, 1.0f, 1.0f), 0.5f);
+	}
 }
 
 void World::handleKey(GLFWwindow * window, int key, int scancode, int action, int mods)

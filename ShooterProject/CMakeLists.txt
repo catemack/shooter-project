@@ -20,8 +20,8 @@ set(SOURCE_FILES_CORE
 	"src/entities/renderable.hpp"
 	"src/entities/color_entity.cpp"
 	"src/entities/color_entity.hpp"
-	"src/entities/texture_entity.cpp"
-	"src/entities/texture_entity.hpp"
+	#"src/entities/texture_entity.cpp"
+	#"src/entities/texture_entity.hpp"
 )
 set(SOURCE_FILES_GLAD "ext/glad/src/glad.c")
 

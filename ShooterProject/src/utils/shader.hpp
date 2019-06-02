@@ -5,19 +5,20 @@
 #include <fstream>
 #include <sstream>
 
-// glfw
-#define GLFW_DLL
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include <common.hpp>
 
 class Shader
 {
 public:
-	Shader();
+	Shader(const std::string& vsShadvsPatherPath, const std::string&);
 	~Shader();
 
-	bool init(const char* vsPath, const char* fsPath);
 	void use();
+
+	void setFloat(const std::string& variable, const float value) const;
+	void setVec3(const std::string& variable, const glm::vec3& value) const;
+	void setVec4(const std::string& variable, const glm::vec4& value) const;
+	void setMat4(const std::string& variable, const glm::mat4& value) const;
 
 	GLuint program;
 

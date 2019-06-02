@@ -1,32 +1,9 @@
 #include "shader.hpp"
 
-Shader::Shader() :
+Shader::Shader(const std::string& vsPath, const std::string& fsPath) :
 	vertex(NULL),
 	fragment(NULL),
 	program(NULL)
-{
-}
-
-Shader::~Shader()
-{
-	if (program != NULL)
-	{
-		glDeleteProgram(program);
-	}
-
-	if (vertex != NULL)
-	{
-		glDeleteShader(vertex);
-
-	}
-
-	if (fragment != NULL)
-	{
-		glDeleteShader(fragment);
-	}
-}
-
-bool Shader::init(const char* vsPath, const char* fsPath)
 {
 	// open shader files
 	std::ifstream vsInStream(vsPath);
@@ -34,13 +11,13 @@ bool Shader::init(const char* vsPath, const char* fsPath)
 
 	if (!vsInStream.good())
 	{
-		fprintf(stderr, "Failed to load vertex shader file %s", vsPath);
-		return false;
+		fprintf(stderr, "Failed to load vertex shader file %s", vsPath.c_str());
+		return;
 	}
 	if (!fsInStream.good())
 	{
-		fprintf(stderr, "Failed to load fragment shader file %s", fsPath);
-		return false;
+		fprintf(stderr, "Failed to load fragment shader file %s", fsPath.c_str());
+		return;
 	}
 
 	// read sources
@@ -67,7 +44,7 @@ bool Shader::init(const char* vsPath, const char* fsPath)
 	{
 		glGetShaderInfoLog(vertex, 512, NULL, infoLog);
 		fprintf(stderr, "Vertex shader compilation failed:\n%s", infoLog);
-		return false;
+		return;
 	}
 
 	// compile fragment shader
@@ -80,7 +57,7 @@ bool Shader::init(const char* vsPath, const char* fsPath)
 	{
 		glGetShaderInfoLog(fragment, 512, NULL, infoLog);
 		fprintf(stderr, "Fragment shader compilation failed:\n%s", infoLog);
-		return false;
+		return;
 	}
 
 	// linking
@@ -94,13 +71,50 @@ bool Shader::init(const char* vsPath, const char* fsPath)
 	{
 		glGetShaderInfoLog(fragment, 512, NULL, infoLog);
 		fprintf(stderr, "Shader program linking failed:\n%s", infoLog);
-		return false;
+		return;
+	}
+}
+
+Shader::~Shader()
+{
+	if (program != NULL)
+	{
+		glDeleteProgram(program);
 	}
 
-	return true;
+	if (vertex != NULL)
+	{
+		glDeleteShader(vertex);
+
+	}
+
+	if (fragment != NULL)
+	{
+		glDeleteShader(fragment);
+	}
 }
 
 void Shader::use()
 {
 	glUseProgram(program);
+}
+
+void Shader::setFloat(const std::string& variable, const float value) const
+{
+	glUniform1f(glGetUniformLocation(program, variable.c_str()), value);
+}
+
+void Shader::setVec3(const std::string& variable, const glm::vec3& value) const
+{
+	glUniform3fv(glGetUniformLocation(program, variable.c_str()), 1, &value[0]);
+}
+
+void Shader::setVec4(const std::string& variable, const glm::vec4& value) const
+{
+	glUniform4fv(glGetUniformLocation(program, variable.c_str()), 1, &value[0]);
+}
+
+void Shader::setMat4(const std::string& variable, const glm::mat4& value) const
+{
+	glUniformMatrix4fv(glGetUniformLocation(program, variable.c_str()), 1, GL_FALSE, &value[0][0]);
 }
