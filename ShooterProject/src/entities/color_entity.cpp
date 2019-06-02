@@ -46,7 +46,7 @@ void ColorEntity::draw(const Camera& camera)
 void ColorEntity::draw(const Camera& camera, const glm::vec3 lightColor, const float lightIntensity)
 {
 	/* Set transform matrix */
-	glm::mat4 transform = glm::mat4(5.0f);
+	glm::mat4 transform = glm::mat4(1.0f);
 	transform = glm::translate(transform, pos);
 
 	/* Set projection matrix */
@@ -54,6 +54,9 @@ void ColorEntity::draw(const Camera& camera, const glm::vec3 lightColor, const f
 
 	/* Set view matrix */
 	glm::mat4 view = camera.getViewMatrix();
+
+	/* Set normal matrix */
+	glm::mat3 normal = glm::mat3(glm::transpose(glm::inverse(transform)));
 
 	/* Set shaders */
 	shader.use();
@@ -65,9 +68,16 @@ void ColorEntity::draw(const Camera& camera, const glm::vec3 lightColor, const f
 	shader.setMat4("view", view);
 	shader.setMat4("transform", transform);
 	shader.setMat4("projection", projection);
+	shader.setMat3("normal_mat", normal);
 
-	shader.setVec3("ambientLightColor", lightColor);
-	shader.setFloat("ambientLightStrength", lightIntensity);
+	glm::vec3 diffLightPos = glm::vec3(2.5f, 0.0f, 5.0f);
+	glm::vec3 diffLightColor = glm::vec3(1.0f, 1.0f, 1.0f);
+
+	shader.setVec3("light_pos", diffLightPos);
+	shader.setVec3("light_color", diffLightColor);
+
+	shader.setVec3("ambient_light_color", lightColor);
+	shader.setFloat("ambient_light_strength", lightIntensity);
 
 	/* Draw triangles */
 	glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -89,6 +99,9 @@ void ColorEntity::setVertexArrays(const ColorVertex vertices[], const int size)
 	/* Input data from vertex buffer */
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
+
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(ColorVertex), (void*)0);
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(ColorVertex), (void*)sizeof(glm::vec3));
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(ColorVertex), (void*)(sizeof(glm::vec3) + sizeof(glm::vec4)));
 }
