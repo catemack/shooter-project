@@ -11,6 +11,7 @@
 #include <entities/renderable.hpp>
 #include <entities/color_entity.hpp>
 #include <entities/texture_entity.hpp>
+#include <entities/player.hpp>
 
 #include <utils/camera.hpp>
 
@@ -30,7 +31,7 @@ private:
 	void handleMouseMove(GLFWwindow* window, double xpos, double ypos);
 
 	std::vector<Renderable*> renderables;
-	Camera camera;
+	Player player;
 
 	// keypress bools
 	bool pressedForward;

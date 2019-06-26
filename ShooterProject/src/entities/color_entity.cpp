@@ -79,7 +79,7 @@ void ColorEntity::draw(const Camera& camera, const glm::vec3 lightColor, const f
 	shader.setVec3("ambient_light_color", lightColor);
 	shader.setFloat("ambient_light_strength", lightIntensity);
 
-	shader.setVec3("view_pos", camera.pos);
+	shader.setVec3("view_pos", camera.getPos());
 
 	/* Draw triangles */
 	glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -104,6 +104,6 @@ void ColorEntity::setVertexArrays(const ColorVertex vertices[], const int size)
 	glEnableVertexAttribArray(2);
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(ColorVertex), (void*)0);
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(ColorVertex), (void*)sizeof(glm::vec3));
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(ColorVertex), (void*)(sizeof(glm::vec3) + sizeof(glm::vec4)));
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(ColorVertex), (void*)(2 * sizeof(glm::vec3)));
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(ColorVertex), (void*)sizeof(glm::vec3));
 }

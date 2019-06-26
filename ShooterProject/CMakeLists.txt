@@ -20,6 +20,8 @@ set(SOURCE_FILES_CORE
 	"src/entities/renderable.hpp"
 	"src/entities/color_entity.cpp"
 	"src/entities/color_entity.hpp"
+	"src/entities/player.cpp"
+	"src/entities/player.hpp"
 	#"src/entities/texture_entity.cpp"
 	#"src/entities/texture_entity.hpp"
 )

@@ -5,10 +5,15 @@
 class Camera
 {
 public:
-	Camera();
+	Camera(const glm::vec3 position);
 
 	glm::mat4 getViewMatrix() const;
+	glm::vec3 getPos() const;
 
+	void move(float forward, float right);
+	void tilt(float deltaYaw, float deltaPitch);
+
+private:
 	float pitch;
 	float yaw;
 

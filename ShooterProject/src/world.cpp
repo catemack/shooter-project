@@ -7,7 +7,8 @@ World::World() :
 	pressedRight(false),
 	lastX(WindowWidth / 2),
 	lastY(WindowHeight / 2),
-	firstMouseUpdate(true)
+	firstMouseUpdate(true),
+	player(glm::vec3(0.0f, 0.0f, 3.0f))
 {
 }
 
@@ -20,47 +21,47 @@ World::~World()
 bool World::init()
 {
 	ColorVertex vertices[] = {
-		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, -1.0f) },
-		{ glm::vec3(0.5f, -0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, -1.0f) },
-		{ glm::vec3(0.5f, 0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, -1.0f) },
-		{ glm::vec3(0.5f, 0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, -1.0f) },
-		{ glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, -1.0f) },
-		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, -1.0f) },
+		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, -0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, 0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, 0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f)  },
 
-		{ glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f) },
-		{ glm::vec3(0.5f, -0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f) },
-		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f) },
-		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f) },
-		{ glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f) },
-		{ glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, -0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
 
-		{ glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(-1.0f, 0.0f, 0.0f) },
-		{ glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(-1.0f, 0.0f, 0.0f) },
-		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(-1.0f, 0.0f, 0.0f) },
-		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(-1.0f, 0.0f, 0.0f) },
-		{ glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(-1.0f, 0.0f, 0.0f) },
-		{ glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(-1.0f, 0.0f, 0.0f) },
+		{ glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec3(-1.0f, 0.0f, 0.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec3(-1.0f, 0.0f, 0.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(-1.0f, 0.0f, 0.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(-1.0f, 0.0f, 0.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec3(-1.0f, 0.0f, 0.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec3(-1.0f, 0.0f, 0.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
 
-		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(1.0f, 0.0f, 0.0f) },
-		{ glm::vec3(0.5f, 0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(1.0f, 0.0f, 0.0f) },
-		{ glm::vec3(0.5f, -0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(1.0f, 0.0f, 0.0f) },
-		{ glm::vec3(0.5f, -0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(1.0f, 0.0f, 0.0f) },
-		{ glm::vec3(0.5f, -0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(1.0f, 0.0f, 0.0f) },
-		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(1.0f, 0.0f, 0.0f) },
+		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, 0.5f, -0.5f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, -0.5f, -0.5f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, -0.5f, -0.5f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, -0.5f, 0.5f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
 
-		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f) },
-		{ glm::vec3(0.5f, -0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f) },
-		{ glm::vec3(0.5f, -0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f) },
-		{ glm::vec3(0.5f, -0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f) },
-		{ glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f) },
-		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f) },
+		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, -0.5f, -0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, -0.5f, 0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, -0.5f, 0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
 
-		{ glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f) },
-		{ glm::vec3(0.5f, 0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f) },
-		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f) },
-		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f) },
-		{ glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f) },
-		{ glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f) }
+		{ glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, 0.5f, -0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
+		{ glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) }
 	};
 
 	renderables.push_back(new ColorEntity(glm::vec3(0.0f, 0.0f, 0.0f), vertices, 36, "lit_color", "lit_color"));
@@ -111,30 +112,24 @@ bool World::init()
 
 	renderables.push_back(new ColorEntity(glm::vec3(5.0f, 0.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0), lightVerts, 36, "color", "color"));
 
-	/*renderables.push_back(new TextureEntity);
-	if (!((TextureEntity*)renderables.back())->init("./data/textures/awesomeface.png"))
-		return false;*/
-
 	return true;
 }
 
 void World::update(float deltaTime)
 {
-	float cameraSpeed = 2.5f * deltaTime;
-
-	// Create a normalized projection of camera.front on the XZ axis
-	// This keeps the player bound to only moving horizontally with WASD
-	glm::vec3 front = glm::vec3(camera.front.x, 0.0f, camera.front.z);
-	front = glm::normalize(front);
+	float forward = 0.0f;
+	float right = 0.0f;
 
 	if (pressedForward)
-		camera.pos += cameraSpeed * front;
+		forward += deltaTime;
 	if (pressedBackward)
-		camera.pos -= cameraSpeed * front;
+		forward -= deltaTime;
 	if (pressedLeft)
-		camera.pos -= cameraSpeed * glm::normalize(glm::cross(front, camera.up));
+		right -= deltaTime;
 	if (pressedRight)
-		camera.pos += cameraSpeed * glm::normalize(glm::cross(front, camera.up));
+		right += deltaTime;
+
+	player.move(forward, right);
 }
 
 void World::bindInputHandlers(GLFWwindow* window)
@@ -155,7 +150,7 @@ void World::bindInputHandlers(GLFWwindow* window)
 void World::render()
 {
 	for (auto renderable : renderables) {
-		renderable->draw(camera, glm::vec3(1.0f, 1.0f, 1.0f), 0.5f);
+		renderable->draw(player.getCamera(), glm::vec3(1.0f, 1.0f, 1.0f), 0.5f);
 	}
 }
 
@@ -181,6 +176,7 @@ void World::handleKey(GLFWwindow * window, int key, int scancode, int action, in
 
 void World::handleMouseMove(GLFWwindow* window, double xpos, double ypos)
 {
+	// Don't update camera on first update so the view doesn't suddenly jump
 	if (firstMouseUpdate)
 	{
 		firstMouseUpdate = false;
@@ -193,22 +189,5 @@ void World::handleMouseMove(GLFWwindow* window, double xpos, double ypos)
 	lastX = xpos;
 	lastY = ypos;
 
-	float sensitivity = 0.05f;
-	deltaX *= sensitivity;
-	deltaY *= sensitivity;
-
-	camera.yaw += deltaX;
-	camera.pitch += deltaY;
-
-	// Bind pitch range so we can't do flips (yet)
-	if (camera.pitch > 89.0f)
-		camera.pitch = 89.0f;
-	if (camera.pitch < -89.0f)
-		camera.pitch = -89.0f;
-
-	glm::vec3 front;
-	front.x = cos(glm::radians(camera.yaw)) * cos(glm::radians(camera.pitch));
-	front.y = sin(glm::radians(camera.pitch));
-	front.z = sin(glm::radians(camera.yaw)) * cos(glm::radians(camera.pitch));
-	camera.front = glm::normalize(front);
+	player.look(deltaX, deltaY);
 }

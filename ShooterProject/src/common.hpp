@@ -23,15 +23,18 @@ struct Mesh
 	GLuint ebo;
 };
 
-struct ColorVertex
+struct Vertex
 {
 	glm::vec3 pos;
-	glm::vec4 color;
 	glm::vec3 normal;
 };
 
-struct TextureVertex
+struct ColorVertex : public Vertex
 {
-	glm::vec3 pos;
+	glm::vec4 color;
+};
+
+struct TextureVertex : public Vertex
+{
 	glm::vec2 texPos;
 };
