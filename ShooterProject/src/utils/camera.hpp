@@ -7,10 +7,12 @@ class Camera
 public:
 	Camera(const glm::vec3 position);
 
-	glm::mat4 getViewMatrix() const;
-	glm::vec3 getPos() const;
+	const glm::mat4 getViewMatrix() const;
+	const glm::vec3 getPos() const;
+	const glm::vec3 getFront() const;
+	const glm::vec3 getUp() const;
 
-	void move(float forward, float right);
+	void displace(glm::vec3 delta);
 	void tilt(float deltaYaw, float deltaPitch);
 
 private:

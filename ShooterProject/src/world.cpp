@@ -5,8 +5,8 @@ World::World() :
 	pressedBackward(false),
 	pressedLeft(false),
 	pressedRight(false),
-	lastX(WindowWidth / 2),
-	lastY(WindowHeight / 2),
+	lastX(WindowWidth / 2.0f),
+	lastY(WindowHeight / 2.0f),
 	firstMouseUpdate(true),
 	player(glm::vec3(0.0f, 0.0f, 3.0f))
 {
@@ -112,6 +112,45 @@ bool World::init()
 
 	renderables.push_back(new ColorEntity(glm::vec3(5.0f, 0.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0), lightVerts, 36, "color", "color"));
 
+	std::array<std::array<glm::vec3, 4>, 6> wallBounds;
+	wallBounds[0] = {
+		glm::vec3(0.5, -0.5, -1.0),
+		glm::vec3(-0.5, -0.5, -1.0),
+		glm::vec3(0.5, 0.5, -1.0),
+		glm::vec3(-0.5, 0.5, -1.0)
+	};
+	wallBounds[1] = {
+		glm::vec3(0.5, -0.5, 1.0),
+		glm::vec3(-0.5, -0.5, 1.0),
+		glm::vec3(0.5, 0.5, 1.0),
+		glm::vec3(-0.5, 0.5, 1.0)
+	};
+	wallBounds[2] = {
+		glm::vec3(-0.5, 0.5, -1.0),
+		glm::vec3(-0.5, 0.5, 1.0),
+		glm::vec3(-0.5, -0.5, -1.0),
+		glm::vec3(-0.5, -0.5, 1.0)
+	};
+	wallBounds[3] = {
+		glm::vec3(0.5, 0.5, -1.0),
+		glm::vec3(0.5, 0.5, 1.0),
+		glm::vec3(0.5, -0.5, -1.0),
+		glm::vec3(0.5, -0.5, 1.0)
+	};
+	wallBounds[4] = {
+		glm::vec3(0.5, -0.5, -1.0),
+		glm::vec3(-0.5, -0.5, -1.0),
+		glm::vec3(0.5, -0.5, 1.0),
+		glm::vec3(-0.5, -0.5, 1.0)
+	};
+	wallBounds[5] = {
+		glm::vec3(0.5, 0.5, -1.0),
+		glm::vec3(-0.5, 0.5, -1.0),
+		glm::vec3(0.5, 0.5, 1.0),
+		glm::vec3(-0.5, 0.5, 1.0)
+	};
+	walls.push_back(new Wall(glm::vec3(-5.0, 0.0, 0.0), glm::vec4(0.2, 0.2, 0.2, 1.0), wallBounds));
+
 	return true;
 }
 
@@ -130,6 +169,15 @@ void World::update(float deltaTime)
 		right += deltaTime;
 
 	player.move(forward, right);
+
+	// Handle collisions
+	for (auto wall : walls)
+	{
+		if (wall->intersects(player))
+		{
+			//std::cout << "intersection" << std::endl;
+		}
+	}
 }
 
 void World::bindInputHandlers(GLFWwindow* window)
@@ -151,6 +199,10 @@ void World::render()
 {
 	for (auto renderable : renderables) {
 		renderable->draw(player.getCamera(), glm::vec3(1.0f, 1.0f, 1.0f), 0.5f);
+	}
+
+	for (auto wall : walls) {
+		wall->draw(player.getCamera(), glm::vec3(1.0f, 1.0f, 1.0f), 0.5f);
 	}
 }
 
@@ -180,14 +232,14 @@ void World::handleMouseMove(GLFWwindow* window, double xpos, double ypos)
 	if (firstMouseUpdate)
 	{
 		firstMouseUpdate = false;
-		lastX = xpos;
-		lastY = ypos;
+		lastX = float(xpos);
+		lastY = float(ypos);
 	}
 
-	float deltaX = xpos - lastX;
-	float deltaY = lastY - ypos;
-	lastX = xpos;
-	lastY = ypos;
+	float deltaX = float(xpos) - lastX;
+	float deltaY = lastY - float(ypos);
+	lastX = float(xpos);
+	lastY = float(ypos);
 
 	player.look(deltaX, deltaY);
 }

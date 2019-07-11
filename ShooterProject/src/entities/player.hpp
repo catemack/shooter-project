@@ -1,9 +1,10 @@
 #pragma once
 
 #include <common.hpp>
+#include "collidable.hpp"
 #include <utils/camera.hpp>
 
-class Player
+class Player : public Collidable
 {
 public:
 	Player(glm::vec3 position);

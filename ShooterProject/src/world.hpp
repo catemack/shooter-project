@@ -2,6 +2,7 @@
 
 // stdlib
 #include <vector>
+#include <array>
 
 // GLFW
 #define GLFW_DLL
@@ -12,6 +13,7 @@
 #include <entities/color_entity.hpp>
 #include <entities/texture_entity.hpp>
 #include <entities/player.hpp>
+#include <entities/wall.hpp>
 
 #include <utils/camera.hpp>
 
@@ -31,6 +33,8 @@ private:
 	void handleMouseMove(GLFWwindow* window, double xpos, double ypos);
 
 	std::vector<Renderable*> renderables;
+	std::vector<Wall*> walls;
+
 	Player player;
 
 	// keypress bools

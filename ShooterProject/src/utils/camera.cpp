@@ -9,15 +9,9 @@ Camera::Camera(const glm::vec3 position) :
 {
 }
 
-void Camera::move(float forward, float right)
+void Camera::displace(glm::vec3 delta)
 {
-	// Create a normalized projection of camera.front on the XZ axis
-	// Keeps movement limited to horizontal
-	glm::vec3 frontProj = glm::vec3(front.x, 0.0f, front.z);
-	frontProj = glm::normalize(frontProj);
-
-	pos += forward * frontProj;
-	pos += right * glm::normalize(glm::cross(frontProj, up));
+	pos += delta;
 }
 
 void Camera::tilt(float deltaYaw, float deltaPitch)
@@ -38,12 +32,22 @@ void Camera::tilt(float deltaYaw, float deltaPitch)
 	front = glm::normalize(newFront);
 }
 
-glm::vec3 Camera::getPos() const
+const glm::vec3 Camera::getPos() const
 {
 	return pos;
 }
 
-glm::mat4 Camera::getViewMatrix() const
+const glm::vec3 Camera::getFront() const
+{
+	return front;
+}
+
+const glm::vec3 Camera::getUp() const
+{
+	return up;
+}
+
+const glm::mat4 Camera::getViewMatrix() const
 {
 	return glm::lookAt(pos, pos + front, up);
 }

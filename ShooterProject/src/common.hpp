@@ -2,6 +2,7 @@
 
 // stdlib
 #include <iostream>
+#include <array>
 
 // GLFW
 #define GLFW_DLL
