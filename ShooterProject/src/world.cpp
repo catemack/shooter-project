@@ -175,7 +175,7 @@ void World::update(float deltaTime)
 	{
 		if (wall->intersects(player))
 		{
-			//std::cout << "intersection" << std::endl;
+			player.resolveCollision(*wall);
 		}
 	}
 }
