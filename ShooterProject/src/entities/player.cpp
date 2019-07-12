@@ -34,8 +34,7 @@ void Player::move(float deltaTimeForward, float deltaTimeRight)
 
 void Player::look(float deltaX, float deltaY)
 {
-	// TODO: uncomment this when rotating bounding box fixed
-	//Collidable::rotateRadians(deltaX * lookSensitivity);
+	Collidable::rotateRadians(deltaX * lookSensitivity);
 	camera.tilt(deltaX * lookSensitivity, deltaY * lookSensitivity);
 }
 
@@ -59,22 +58,22 @@ void Player::resolveCollision(const Wall& wall)
 	float maxZ = wallBounds[0][0].z;
 
 	float delta = getPos().x - minX;
-	glm::vec3 displacement = glm::vec3(-delta-0.5, 0.0, 0.0);
+	glm::vec3 displacement = glm::vec3(-delta - (0.5*std::sqrt(2)), 0.0, 0.0);
 
 	if (maxX - getPos().x < delta)
 	{
 		delta = maxX - getPos().x;
-		displacement = glm::vec3(delta+0.5, 0.0, 0.0);
+		displacement = glm::vec3(delta + (0.5 * std::sqrt(2)), 0.0, 0.0);
 	}
 	if (getPos().z - minZ < delta)
 	{
 		delta = getPos().z - minZ;
-		displacement = glm::vec3(0.0, 0.0, -delta-0.5);
+		displacement = glm::vec3(0.0, 0.0, -delta - (0.5 * std::sqrt(2)));
 	}
 	if (maxZ - getPos().z < delta)
 	{
 		delta = maxZ - getPos().z;
-		displacement = glm::vec3(0.0, 0.0, delta+0.5);
+		displacement = glm::vec3(0.0, 0.0, delta + (0.5 * std::sqrt(2)));
 	}
 
 	move(displacement);

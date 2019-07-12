@@ -34,19 +34,21 @@ void Collidable::rotateDegrees(float r)
 	rotateRadians(r * glm::pi<float>() / 180.0f);
 }
 
-// TODO: bug in this math somewhere
 void Collidable::rotateRadians(float r)
 {
+	float cosR = cos(r);
+	float sinR = sin(r);
+
 	for (int i = 0; i < 6; ++i)
 	{
 		for (int j = 0; j < 4; ++j)
 		{
-			glm::vec3 oldPoint = realArea[i][j];
+			glm::vec3 p = realArea[i][j] - pos;
 
-			float newX = cos(r) * (oldPoint.x - pos.x) - sin(r) * (oldPoint.z - pos.z) + pos.x;
-			float newZ = sin(r) * (oldPoint.x - pos.x) - cos(r) * (oldPoint.z - pos.z) + pos.z;
+			float newX = p.x * cosR - p.z * sinR;
+			float newZ = p.x * sinR + p.z * cosR;
 
-			realArea[i][j] = glm::vec3(newX, oldPoint.y, newZ);
+			realArea[i][j] = glm::vec3(newX + pos.x, realArea[i][j].y, newZ + pos.z);
 		}
 	}
 

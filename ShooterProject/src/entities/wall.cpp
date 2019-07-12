@@ -3,7 +3,6 @@
 // wallBounds is a rectangular prism, faces should be ordered:
 // front, back, left, right, down, up
 Wall::Wall(glm::vec3 position, glm::vec4 color, std::array<std::array<glm::vec3, 4>, 6> wallBounds) :
-	//Renderable::pos(position),
 	Collidable(position, wallBounds),
 	Renderable("lit_color", "lit_color")
 {
