@@ -1,5 +1,4 @@
 #include "collidable.hpp"
-#include "glm/gtx/string_cast.hpp"
 
 Collidable::Collidable(glm::vec3 position, std::array<std::array<glm::vec3, 4>, 6> box) :
 	pos(position),
@@ -12,6 +11,7 @@ Collidable::Collidable(glm::vec3 position, std::array<std::array<glm::vec3, 4>, 
 
 void Collidable::displace(glm::vec3 delta)
 {
+	lastPos = pos;
 	pos += delta;
 
 	for (int i = 0; i < 6; ++i)
@@ -60,11 +60,17 @@ const glm::vec3 Collidable::getPos() const
 	return pos;
 }
 
+const glm::vec3 Collidable::getLastPos() const
+{
+	return lastPos;
+}
+
 const std::array<std::array<glm::vec3, 4>, 6>& Collidable::getBounds() const
 {
 	return boundingBox;
 }
 
+// TODO: check ray-based intersection (for fast moving objects like bullets)
 bool Collidable::intersects(const Collidable& other)
 {
 	std::array<std::array<glm::vec3, 4>, 6> otherBounds = other.getBounds();
