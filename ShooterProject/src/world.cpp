@@ -170,12 +170,24 @@ void World::update(float deltaTime)
 
 	player.move(forward, right);
 
-	// Handle collisions
+	for (auto bullet : bullets)
+		bullet->move(deltaTime);
+
+	// Handle wall collisions
 	for (auto wall : walls)
 	{
 		if (wall->intersects(player))
-		{
 			player.resolveCollision(*wall);
+
+		for (auto bullet = bullets.begin(); bullet != bullets.end(); )
+		{
+			if (!(*bullet)->shouldCleanUp() && wall->intersects(**bullet))
+				(*bullet)->resolveCollision(*wall);
+
+			if ((*bullet)->shouldCleanUp())
+				bullet = bullets.erase(bullet);
+			else
+				++bullet;
 		}
 	}
 }
@@ -188,6 +200,10 @@ void World::bindInputHandlers(GLFWwindow* window)
 	// Bind keyboard input
 	auto keyRedirect = [](GLFWwindow * wnd, int _0, int _1, int _2, int _3) { ((World*)glfwGetWindowUserPointer(wnd))->handleKey(wnd, _0, _1, _2, _3); };
 	glfwSetKeyCallback(window, keyRedirect);
+
+	// Bind mouse buttons
+	auto mouseRedirect = [](GLFWwindow* wnd, int _0, int _1, int _2) { ((World*)glfwGetWindowUserPointer(wnd))->handleMouseClick(wnd, _0, _1, _2); };
+	glfwSetMouseButtonCallback(window, mouseRedirect);
 
 	// Bind mouse input
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -203,6 +219,10 @@ void World::render()
 
 	for (auto wall : walls) {
 		wall->draw(player.getCamera(), glm::vec3(1.0f, 1.0f, 1.0f), 0.5f);
+	}
+
+	for (auto bullet : bullets) {
+		bullet->draw(player.getCamera(), glm::vec3(1.0f, 1.0f, 1.0f), 0.5f);
 	}
 }
 
@@ -224,6 +244,12 @@ void World::handleKey(GLFWwindow * window, int key, int scancode, int action, in
 
 	if (key == GLFW_KEY_D)
 		pressedRight = !(action == GLFW_RELEASE);
+}
+
+void World::handleMouseClick(GLFWwindow* window, int button, int action, int mods)
+{
+	if (button == GLFW_MOUSE_BUTTON_1 && action == GLFW_RELEASE)
+		bullets.push_back(new Bullet(player.fire()));
 }
 
 void World::handleMouseMove(GLFWwindow* window, double xpos, double ypos)

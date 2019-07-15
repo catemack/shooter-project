@@ -14,6 +14,7 @@
 #include <entities/texture_entity.hpp>
 #include <entities/player.hpp>
 #include <entities/wall.hpp>
+#include <entities/bullet.hpp>
 
 #include <utils/camera.hpp>
 
@@ -30,10 +31,12 @@ public:
 
 private:
 	void handleKey(GLFWwindow* window, int key, int scancode, int action, int mods);
+	void handleMouseClick(GLFWwindow* window, int button, int action, int mods);
 	void handleMouseMove(GLFWwindow* window, double xpos, double ypos);
 
 	std::vector<Renderable*> renderables;
 	std::vector<Wall*> walls;
+	std::vector<Bullet*> bullets;
 
 	Player player;
 

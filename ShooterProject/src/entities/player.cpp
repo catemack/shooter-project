@@ -34,7 +34,7 @@ void Player::move(float deltaTimeForward, float deltaTimeRight)
 
 void Player::look(float deltaX, float deltaY)
 {
-	Collidable::rotateRadians(deltaX * lookSensitivity);
+	//Collidable::rotateRadians(deltaX * lookSensitivity);
 	camera.tilt(deltaX * lookSensitivity, deltaY * lookSensitivity);
 }
 
@@ -46,6 +46,11 @@ glm::vec3 Player::getPos()
 const Camera Player::getCamera()
 {
 	return camera;
+}
+
+Bullet Player::fire()
+{
+	return Bullet(getPos(), camera.getFront() * bulletSpeed);
 }
 
 // TODO: consider a force-based resolution mechanism (once player acceleration is a thing)

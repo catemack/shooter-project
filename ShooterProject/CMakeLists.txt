@@ -26,8 +26,8 @@ set(SOURCE_FILES_CORE
 	"src/entities/collidable.hpp"
 	"src/entities/wall.cpp"
 	"src/entities/wall.hpp"
-	#"src/entities/texture_entity.cpp"
-	#"src/entities/texture_entity.hpp"
+	"src/entities/bullet.cpp"
+	"src/entities/bullet.hpp"
 )
 set(SOURCE_FILES_GLAD "ext/glad/src/glad.c")
 
