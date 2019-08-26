@@ -1,41 +1,10 @@
 #include "color_entity.hpp"
 
-const std::string ColorEntity::VSShaderPath("./shaders/color.vs.glsl");
-const std::string ColorEntity::FSShaderPath("./shaders/color.fs.glsl");
-
-ColorEntity::ColorEntity(const glm::vec3 position, const ColorVertex vertices[], const int size, const std::string vsShader, const std::string fsShader) :
+ColorEntity::ColorEntity(const glm::vec3 position, const std::vector<ColorVertex> vertices, const std::string vsShader, const std::string fsShader) :
 	Renderable(vsShader, fsShader)
-{
-	init(position, vertices, size, vsShader, fsShader);
-}
-
-ColorEntity::ColorEntity(glm::vec3 position, ColorVertex vertices[], const int size) :
-	Renderable("color", "color")
-{
-	init(position, vertices, size, "color", "color");
-}
-
-ColorEntity::ColorEntity(glm::vec3 position, glm::vec4 color, glm::vec3 vertices[], const int size, const std::string vsShader, const std::string fsShader) :
-	Renderable(vsShader, fsShader)
-{
-	ColorVertex* cVertices = new ColorVertex[size];
-
-	for (int i = 0; i < size; ++i)
-	{
-
-		cVertices[i].pos = vertices[i];
-		cVertices[i].color = color;
-	}
-
-	init(position, cVertices, size, vsShader, fsShader);
-
-	delete[] cVertices;
-}
-
-void ColorEntity::init(const glm::vec3 position, const ColorVertex vertices[], const int size, const std::string vsShader, const std::string fsShader)
 {
 	pos = position;
-	setVertexArrays(vertices, size);
+	setVertexArrays(vertices);
 }
 
 void ColorEntity::draw(const Camera& camera)
@@ -83,6 +52,11 @@ void ColorEntity::draw(const Camera& camera, const glm::vec3 lightColor, const f
 
 	/* Draw triangles */
 	glDrawArrays(GL_TRIANGLES, 0, 36);
+}
+
+void ColorEntity::setVertexArrays(const std::vector<ColorVertex> vertices)
+{
+	setVertexArrays(&vertices.front(), vertices.size());
 }
 
 void ColorEntity::setVertexArrays(const ColorVertex vertices[], const int size)

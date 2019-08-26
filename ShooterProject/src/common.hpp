@@ -3,6 +3,9 @@
 // stdlib
 #include <iostream>
 #include <array>
+#include <vector>
+#include <memory>
+#include <string>
 
 // GLFW
 #define GLFW_DLL
@@ -24,18 +27,16 @@ struct Mesh
 	GLuint ebo;
 };
 
-struct Vertex
+struct ColorVertex
 {
 	glm::vec3 pos;
 	glm::vec3 normal;
-};
-
-struct ColorVertex : public Vertex
-{
 	glm::vec4 color;
 };
 
-struct TextureVertex : public Vertex
+struct TextureVertex
 {
+	glm::vec3 pos;
+	glm::vec3 normal;
 	glm::vec2 texPos;
 };

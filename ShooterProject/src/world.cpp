@@ -14,13 +14,11 @@ World::World() :
 
 World::~World()
 {
-	for (auto entity : renderables)
-		delete entity;
 }
 
 bool World::init()
 {
-	ColorVertex vertices[] = {
+	std::vector<ColorVertex> vertices {
 		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
 		{ glm::vec3(0.5f, -0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
 		{ glm::vec3(0.5f, 0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) },
@@ -64,53 +62,55 @@ bool World::init()
 		{ glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec4(0.85f, 0.0f, 0.0f, 1.0f) }
 	};
 
-	renderables.push_back(new ColorEntity(glm::vec3(0.0f, 0.0f, 0.0f), vertices, 36, "lit_color", "lit_color"));
+	auto renderable = std::make_unique<ColorEntity>(glm::vec3(0.0f, 0.0f, 0.0f), vertices, "lit_color", "lit_color");
+	renderables.push_back(std::move(renderable));
 
-	glm::vec3 lightVerts[] = {
-		glm::vec3(-0.5f, -0.5f, -0.5f),
-		glm::vec3(0.5f, -0.5f, -0.5f),
-		glm::vec3(0.5f, 0.5f, -0.5f),
-		glm::vec3(0.5f, 0.5f, -0.5f),
-		glm::vec3(-0.5f, 0.5f, -0.5f),
-		glm::vec3(-0.5f, -0.5f, -0.5f),
+	std::vector<ColorVertex> lightVerts {
+		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(0.5f, -0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(0.5f, 0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(0.5f, 0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec4(1.0, 1.0, 1.0, 1.0)  },
 
-		glm::vec3(-0.5f, -0.5f, 0.5f),
-		glm::vec3(0.5f, -0.5f, 0.5f),
-		glm::vec3(0.5f, 0.5f, 0.5f),
-		glm::vec3(0.5f, 0.5f, 0.5f),
-		glm::vec3(-0.5f, 0.5f, 0.5f),
-		glm::vec3(-0.5f, -0.5f, 0.5f),
+		{ glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(0.5f, -0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
 
-		glm::vec3(-0.5f, 0.5f, 0.5f),
-		glm::vec3(-0.5f, 0.5f, -0.5f),
-		glm::vec3(-0.5f, -0.5f, -0.5f),
-		glm::vec3(-0.5f, -0.5f, -0.5f),
-		glm::vec3(-0.5f, -0.5f, 0.5f),
-		glm::vec3(-0.5f, 0.5f, 0.5f),
+		{ glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec3(-1.0f, 0.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec3(-1.0f, 0.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(-1.0f, 0.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(-1.0f, 0.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec3(-1.0f, 0.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec3(-1.0f, 0.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
 
-		glm::vec3(0.5f, 0.5f, 0.5f),
-		glm::vec3(0.5f, 0.5f, -0.5f),
-		glm::vec3(0.5f, -0.5f, -0.5f),
-		glm::vec3(0.5f, -0.5f, -0.5f),
-		glm::vec3(0.5f, -0.5f, 0.5f),
-		glm::vec3(0.5f, 0.5f, 0.5f),
+		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(0.5f, 0.5f, -0.5f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(0.5f, -0.5f, -0.5f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(0.5f, -0.5f, -0.5f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(0.5f, -0.5f, 0.5f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
 
-		glm::vec3(-0.5f, -0.5f, -0.5f),
-		glm::vec3(0.5f, -0.5f, -0.5f),
-		glm::vec3(0.5f, -0.5f, 0.5f),
-		glm::vec3(0.5f, -0.5f, 0.5f),
-		glm::vec3(-0.5f, -0.5f, 0.5f),
-		glm::vec3(-0.5f, -0.5f, -0.5f),
+		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(0.5f, -0.5f, -0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(0.5f, -0.5f, 0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(0.5f, -0.5f, 0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
 
-		glm::vec3(-0.5f, 0.5f, -0.5f),
-		glm::vec3(0.5f, 0.5f, -0.5f),
-		glm::vec3(0.5f, 0.5f, 0.5f),
-		glm::vec3(0.5f, 0.5f, 0.5f),
-		glm::vec3(-0.5f, 0.5f, 0.5f),
-		glm::vec3(-0.5f, 0.5f, -0.5f)
+		{ glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(0.5f, 0.5f, -0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) },
+		{ glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0) }
 	};
 
-	renderables.push_back(new ColorEntity(glm::vec3(5.0f, 0.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0), lightVerts, 36, "color", "color"));
+	auto light = std::make_unique<ColorEntity>(glm::vec3(5.0f, 0.0f, 0.0f), lightVerts, "color", "color");
+	renderables.push_back(std::move(light));
 
 	std::array<std::array<glm::vec3, 4>, 6> wallBounds;
 	wallBounds[0] = {
@@ -149,7 +149,9 @@ bool World::init()
 		glm::vec3(0.5, 0.5, 1.0),
 		glm::vec3(-0.5, 0.5, 1.0)
 	};
-	walls.push_back(new Wall(glm::vec3(-5.0, 0.0, 0.0), glm::vec4(0.2, 0.2, 0.2, 1.0), wallBounds));
+
+	auto wall = std::make_unique<Wall>(glm::vec3(-5.0, 0.0, 0.0), glm::vec4(0.2, 0.2, 0.2, 1.0), wallBounds);
+	walls.push_back(std::move(wall));
 
 	return true;
 }
@@ -170,11 +172,11 @@ void World::update(float deltaTime)
 
 	player.move(forward, right);
 
-	for (auto bullet : bullets)
+	for (auto& bullet : bullets)
 		bullet->move(deltaTime);
 
 	// Handle wall collisions
-	for (auto wall : walls)
+	for (auto const& wall : walls)
 	{
 		if (wall->intersects(player))
 			player.resolveCollision(*wall);
@@ -213,15 +215,15 @@ void World::bindInputHandlers(GLFWwindow* window)
 
 void World::render()
 {
-	for (auto renderable : renderables) {
+	for (auto const& renderable : renderables) {
 		renderable->draw(player.getCamera(), glm::vec3(1.0f, 1.0f, 1.0f), 0.5f);
 	}
 
-	for (auto wall : walls) {
+	for (auto const& wall : walls) {
 		wall->draw(player.getCamera(), glm::vec3(1.0f, 1.0f, 1.0f), 0.5f);
 	}
 
-	for (auto bullet : bullets) {
+	for (auto const& bullet : bullets) {
 		bullet->draw(player.getCamera(), glm::vec3(1.0f, 1.0f, 1.0f), 0.5f);
 	}
 }
@@ -249,7 +251,10 @@ void World::handleKey(GLFWwindow * window, int key, int scancode, int action, in
 void World::handleMouseClick(GLFWwindow* window, int button, int action, int mods)
 {
 	if (button == GLFW_MOUSE_BUTTON_1 && action == GLFW_RELEASE)
-		bullets.push_back(new Bullet(player.fire()));
+	{
+		auto bullet = player.fire();
+		bullets.push_back(std::move(bullet));
+	}
 }
 
 void World::handleMouseMove(GLFWwindow* window, double xpos, double ypos)

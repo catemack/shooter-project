@@ -1,8 +1,5 @@
 #pragma once
 
-// stdlib
-#include <string>
-
 #include <utils/shader.hpp>
 #include <utils/camera.hpp>
 #include <common.hpp>

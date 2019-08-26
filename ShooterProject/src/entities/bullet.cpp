@@ -20,7 +20,7 @@ Bullet::Bullet(glm::vec3 position, glm::vec3 velocity) :
 {
 	Renderable::pos = position;
 
-	ColorVertex vertices[36] = {
+	std::vector<ColorVertex> vertices {
 		{ bulletBounds[0][0], glm::vec3(0.0f, 0.0f, -1.0f), bulletColor },
 		{ bulletBounds[0][1], glm::vec3(0.0f, 0.0f, -1.0f), bulletColor },
 		{ bulletBounds[0][2], glm::vec3(0.0f, 0.0f, -1.0f), bulletColor },
@@ -73,7 +73,7 @@ Bullet::Bullet(glm::vec3 position, glm::vec3 velocity) :
 
 	/* Bind and set vertex buffer */
 	glBindBuffer(GL_ARRAY_BUFFER, mesh.vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(ColorVertex) * 36, vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(ColorVertex) * 36, &vertices.front(), GL_STATIC_DRAW);
 
 	/* Input data from vertex buffer */
 	glEnableVertexAttribArray(0);

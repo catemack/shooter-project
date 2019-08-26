@@ -1,8 +1,6 @@
 #pragma once
 
-// stdlib
-#include <vector>
-#include <array>
+#include "common.hpp"
 
 // GLFW
 #define GLFW_DLL
@@ -34,9 +32,9 @@ private:
 	void handleMouseClick(GLFWwindow* window, int button, int action, int mods);
 	void handleMouseMove(GLFWwindow* window, double xpos, double ypos);
 
-	std::vector<Renderable*> renderables;
-	std::vector<Wall*> walls;
-	std::vector<Bullet*> bullets;
+	std::vector<std::unique_ptr<Renderable>> renderables;
+	std::vector<std::unique_ptr<Wall>> walls;
+	std::vector<std::unique_ptr<Bullet>> bullets;
 
 	Player player;
 

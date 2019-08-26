@@ -48,9 +48,9 @@ const Camera Player::getCamera()
 	return camera;
 }
 
-Bullet Player::fire()
+std::unique_ptr<Bullet> Player::fire()
 {
-	return Bullet(getPos(), camera.getFront() * bulletSpeed);
+	return std::make_unique<Bullet>(getPos(), camera.getFront() * bulletSpeed);
 }
 
 // TODO: consider a force-based resolution mechanism (once player acceleration is a thing)

@@ -16,7 +16,7 @@ public:
 	void look(float deltaX, float deltaY);
 	glm::vec3 getPos();
 	const Camera getCamera();
-	Bullet fire();
+	std::unique_ptr<Bullet> fire();
 
 	void resolveCollision(const Wall& wall);
 

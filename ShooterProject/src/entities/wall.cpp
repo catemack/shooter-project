@@ -8,7 +8,7 @@ Wall::Wall(glm::vec3 position, glm::vec4 color, std::array<std::array<glm::vec3,
 {
 	Renderable::pos = position;
 
-	ColorVertex vertices[36] = {
+	std::vector<ColorVertex> vertices {
 		{ wallBounds[0][0], glm::vec3(0.0f, 0.0f, -1.0f), color },
 		{ wallBounds[0][1], glm::vec3(0.0f, 0.0f, -1.0f), color },
 		{ wallBounds[0][2], glm::vec3(0.0f, 0.0f, -1.0f), color },
@@ -61,7 +61,7 @@ Wall::Wall(glm::vec3 position, glm::vec4 color, std::array<std::array<glm::vec3,
 
 	/* Bind and set vertex buffer */
 	glBindBuffer(GL_ARRAY_BUFFER, mesh.vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(ColorVertex) * 36, vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(ColorVertex) * 36, &vertices.front(), GL_STATIC_DRAW);
 
 	/* Input data from vertex buffer */
 	glEnableVertexAttribArray(0);
